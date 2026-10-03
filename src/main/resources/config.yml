@@ -1,0 +1,345 @@
+# Версия формата файла (не менять). При повышении раздел mods обновляется сам.
+config-version: 10
+
+# ---------------------------------------------------------------
+# Владельцы плагина. Полный доступ имеют: владельцы из этого списка
+# и ВСЕ игроки с OP. Остальным доступ выдаётся в меню /afc -> Доступ.
+# ---------------------------------------------------------------
+owners:
+  - "Dok_Si"
+
+# Игроки, которых НЕ проверяем (админы, которым нужен Freecam).
+# Также не проверяются игроки с правом antifreecam.bypass
+exempt: []
+
+detection:
+  # проверять ещё и встроенную базу известных модов (Sodium, Iris, JEI, Litematica и т.д.) -
+  # они попадают только в профиль игрока, а не в список срабатываний
+  scan-known-mods: true
+  # true = игроки из исключений тоже проверяются и видны в списке (с пометкой),
+  # но уведомления по ним не приходят. false = исключения вообще не проверяются.
+  scan-exempt: true
+  check-on-join: true
+  join-delay-ticks: 60
+  # автоматическая проверка при заходе не шлёт все "таблички" сразу (это давало резкую
+  # нагрузку у игрока в первые секунды), а растягивает их максимум примерно на 5 секунд после join-delay-ticks.
+  # 0 = отключить растягивание и слать всё подряд, как раньше.
+  join-spread-seconds: 5
+  # пока идёт растянутая проверка, игрок может играть как обычно: если он открыл сундук,
+  # наковальню или любое другое меню, плагин не станет его перебивать - подождёт, пока
+  # он закроет окно, и лишь тогда пришлёт следующую "табличку". То же самое - если он
+  # только что написал в чат (вдруг печатает следующее сообщение): следующая табличка
+  # подождёт ещё N тиков после последнего сообщения в чате (100 тиков = 5 секунд).
+  # Открытие/закрытие СВОЕГО инвентаря (клавиша E) серверу не видно вообще - протокол
+  # не присылает об этом никакого пакета, поэтому от него защититься нельзя технически,
+  # только от сундуков, наковален и любых других настоящих окон.
+  chat-grace-ticks: 20
+  # если клиент не ответил на проверку (грузится, лагает) - повторить (раз) через N тиков
+  retries: 1
+  retry-delay-ticks: 20
+  # Автоматической периодической перепроверки нет: проверка идёт при заходе игрока.
+  # Во время игры новую проверку можно запустить только вручную для ОДНОГО игрока:
+  # кнопкой «Перепроверить этого игрока» в его меню или командой /afc check <ник>.
+  # Перепроверка остальных онлайн-игроков не запускается.
+  # Таймаут ответа клиента (тики)
+  timeout-ticks: 40
+
+
+# ---------------------------------------------------------------
+# ClientWatch companion (необязательный Fabric-мод для клиента).
+# Он отправляет полный список загруженных Fabric-модов и SHA-512 JAR-файлов.
+# Без companion обычная проверка сверху продолжает работать как раньше.
+# ---------------------------------------------------------------
+companion:
+  enabled: true
+  request-delay-ticks: 40
+  max-mods: 500
+
+# ---------------------------------------------------------------
+# Modrinth / CurseForge.
+# Modrinth API работает без ключа; CurseForge требует API key от Overwolf.
+# CurseForge API сам отдаёт SHA-1/MD5/fingerprint, поэтому для SHA-512 plugin
+# по запросу скачивает опубликованный файл и считает SHA-512 локально.
+# ---------------------------------------------------------------
+platforms:
+  modrinth:
+    enabled: true
+  curseforge:
+    enabled: true
+    api-key: ""
+    compute-sha512: true
+  search-limit: 50
+  max-files-per-project: 24
+  max-sha512-files-per-project: 10
+  max-sha512-bytes: 209715200
+  max-dependencies-per-project: 12
+
+actions:
+  log-to-console: true
+
+# ---------------------------------------------------------------
+# Профили игроков: клиент (brand) и моды при заходах, история заходов, отметки вниманием.
+# Кроме модов из списка ниже, плагин видит моды, которые регистрируют сетевые каналы
+# (клиент сам присылает их список при входе): Simple Voice Chat, Xaero и т.п.
+# Моды без сети (визуальные и т.п.) так не видны - только по ключам из списка mods.
+# ---------------------------------------------------------------
+profile:
+  enabled: true
+  # сколько последних заходов хранить для каждого игрока
+  max-history: 30
+  # сколько последних игроков БЕЗ модов хранить в profiles.yml (с модами хранятся всегда)
+  keep-clean: 300
+  # шум: пространства имён каналов, которые не считаем модами ("*" в конце = по префиксу)
+  # Каналы, которые зарегистрировал на сервере какой-то плагин (AuthMe, BungeeCord-мост,
+  # прокси и т.п.), в список модов не попадают автоматически - это не мод игрока, а часть
+  # серверного протокола. Этот список - только для того, что автоматика не поймала сама
+  # (например прокси добавляет канал без регистрации через сервер).
+  ignore-namespaces:
+    - "minecraft"
+    - "c"
+    - "fabric*"
+    - "fabricloader"
+    - "bungeecord*"
+  # красивые названия для известных пространств имён (остальные показываются как есть)
+  known-channels:
+    voicechat: "Simple Voice Chat"
+    xaerominimap: "Xaero's Minimap"
+    xaeroworldmap: "Xaero's World Map"
+    emotecraft: "Emotecraft"
+    journeymap: "JourneyMap"
+    plasmovoice: "Plasmo Voice"
+    voxelmap: "VoxelMap"
+    replaymod: "Replay Mod"
+    itemscroller: "Item Scroller"
+    litematica: "Litematica"
+    minihud: "MiniHUD"
+    tweakeroo: "Tweakeroo"
+    jei: "JEI"
+    emi: "EMI"
+    roughlyenoughitems: "Roughly Enough Items"
+
+# ---------------------------------------------------------------
+# Список модов. name - как мод будет показан в уведомлении и меню.
+# keys - что проверяем у клиента. Мод считается найденным, если совпал
+# ХОТЯ БЫ ОДИН ключ. Виды ключей:
+#   key.xxx.yyy            - keybind (клавиша мода). Если есть - клиент вернёт
+#                            название клавиши (F4), оно показывается в сработке.
+#   lang:xxx.yyy           - строка перевода из lang-файла мода: совпадает,
+#                            если такая строка у клиента есть (мод стоит).
+#   lang:xxx.yyy=Текст     - то же, но ещё и текст должен совпасть точно
+#                            (так различаются форки с одинаковыми ключами).
+#                            Текст берётся из en_us.json мода. Если у игрока другой
+#                            язык и у мода есть перевод, текст будет другим - можно
+#                            перечислить варианты через |:  =Toggle Freecam|Переключить Freecam
+#                            Что вернул клиент, видно в /afc test (строки со знаком ≠).
+#   forbid: [ключ, ...]    - (необязательно, на уровне мода) мод исключается, если ХОТЬ ОДИН из этих
+#                            ключей совпал. Вместе с require даёт точное различение форков.
+#   group: имя           - (необязательно, на уровне мода) моды одной группы взаимоисключающие:
+#                            из группы показывается ОДИН - тот, у кого совпало больше
+#                            ключей (при равенстве - первый по порядку в этом файле).
+#   require: [ключ, ...]   - (необязательно, на уровне мода) мод учитывается, только если
+#                            ВСЕ эти ключи совпали.
+#   forbid:  [ключ, ...]   - (необязательно) мод НЕ учитывается, если совпал хотя бы один.
+#                            require + forbid позволяют точно отличать версии и форки
+#                            по наличию/отсутствию строк - это не зависит от языка клиента.
+#   category: cheat        - (необязательно) пометка "читерский клиент": в уведомлении и меню
+#                            выделяется красным, исключения (exempt) на такие моды не действуют.
+#   group: имя             - (необязательно) моды одной группы взаимоисключающие: из группы
+#                            показывается ОДИН - тот, у кого совпало больше ключей.
+# Ключи проверяются пачками по 4 (одна табличка на пачку), одинаковые
+# ключи разных модов проверяются один раз.
+# Проверить ключ на живом игроке: /afc probe <ник> <ключ> [ключ...]
+# Диагностика по всему конфигу: /afc test <ник>
+# ---------------------------------------------------------------
+mods:
+  # ---- семейство Freecam (ключи key.freecam.*) ----
+  # Отличаются строками lang-файлов (их наличие не зависит от языка клиента):
+  #   D  modmenu.descriptionTranslation.freecam        - Freecam, Friendly, Fair (и xcam)
+  #   DL modmenu.descriptionTranslation.legacyfreecam  - только старая версия LegacyFreecam
+  #   C  freecam.config.collision.label                - есть у всех, кроме Fair
+  #   N  neoforge.screen.mods.info.description.freecam - только Freecam 1.5+
+  # Каждая запись требует свой набор и запрещает чужие, поэтому у игрока
+  # определяется ровно один вариант.
+  legacyfreecam:
+    name: "LegacyFreecam"
+    group: "freecam"
+    require:
+      - "key.freecam.toggle"
+      - "lang:modmenu.descriptionTranslation.legacyfreecam"
+    keys: ["key.freecam.toggle"]
+
+  minecraftfreecam:
+    name: "Freecam (MinecraftFreecam)"
+    group: "freecam"
+    require:
+      - "key.freecam.toggle"
+      - "lang:modmenu.descriptionTranslation.freecam"
+      - "lang:freecam.config.collision.label"
+      - "lang:neoforge.screen.mods.info.description.freecam"
+    keys: ["key.freecam.toggle"]
+
+  minecraftfreecam-old:
+    name: "Freecam 1.4.x (MinecraftFreecam)"
+    group: "freecam"
+    require:
+      - "key.freecam.toggle"
+      - "lang:modmenu.descriptionTranslation.freecam"
+      - "lang:freecam.config.collision.label"
+    forbid:
+      - "lang:neoforge.screen.mods.info.description.freecam"
+    keys: ["key.freecam.toggle"]
+
+  friendlyfreecam:
+    name: "FriendlyFreecam (1.4.1-beta)"
+    group: "freecam"
+    require:
+      - "key.freecam.toggle"
+      - "lang:modmenu.descriptionTranslation.freecam"
+      - "lang:freecam.config.collision.label"
+      - "lang:freecam.msg.enabled=FriendlyFreecam has been enabled."
+    forbid:
+      - "lang:neoforge.screen.mods.info.description.freecam"
+    keys: ["key.freecam.toggle"]
+
+  fairfreecam:
+    name: "Fair Freecam"
+    group: "freecam"
+    require:
+      - "key.freecam.toggle"
+      - "lang:modmenu.descriptionTranslation.freecam"
+    forbid:
+      - "lang:freecam.config.collision.label"
+      - "lang:neoforge.screen.mods.info.description.freecam"
+    keys: ["key.freecam.toggle"]
+
+  aether-freecam:
+    name: "Freecam+ (Aether Freecam)"
+    group: "freecam"
+    require:
+      - "key.freecam.toggle"
+      - "key.freecam.speed_up"
+    keys: ["key.freecam.toggle", "key.freecam.speed_down"]
+
+  # Запасной вариант: есть клавиша key.freecam.toggle, но набор строк не подошёл
+  # ни под одну известную версию (новая версия или неизвестный форк).
+  freecam-unknown:
+    name: "Freecam-подобный мод (неизвестная версия)"
+    group: "freecam"
+    keys: ["key.freecam.toggle"]
+
+  # ---- отдельные моды ----
+  xcam:
+    name: "FreeCam (xcam)"
+    keys:
+      - "key.xcam.toggle"
+      - "key.xcam.followPlayer.toggle"
+
+  buildersfreecam:
+    name: "Builders Freecam"
+    keys:
+      - "key.buildersfreecam.toggle"
+
+  zergatul:
+    name: "FreeCam (Zergatul)"
+    keys:
+      - "key.zergatul.freecam.toggle"
+
+  easy-freecam:
+    name: "Easy Freecam"
+    keys:
+      - "key.easy-freecam.toggle_freecam"
+
+  smooth-freecam:
+    name: "Smooth Freecam"
+    keys:
+      - "key.smooth_freecam.toggle"
+
+  fpvfreecam:
+    name: "FPV Freecam"
+    keys:
+      - "key.fpvfreecam.open_setup"
+
+  camera-enhancements:
+    name: "Camera Enhancements (Freecam)"
+    keys:
+      - "camenh.keybinds.freecam"
+
+  camera-tweaks:
+    name: "Camera Tweaks (Freecam)"
+    keys:
+      - "key.cameratweaks.freecam"
+
+  zocular:
+    name: "Zocular (Freecam)"
+    keys:
+      - "zocular.freecam"
+
+  # Asteroid: набор ключей 1-в-1 как у Meteor (open-gui / open-commands + категория). Что именно он
+  # умеет, по lang-файлу не видно - поэтому без category: cheat. Если это читерский клиент, добавь
+  # строку  category: "cheat"  (или скажи мне).
+  asteroid:
+    name: "Asteroid (клиент, структура как у Meteor)"
+    keys:
+      - "key.asteroid.open-gui"
+      - "key.asteroid.open-commands"
+      - "lang:key.category.asteroid.asteroid"
+
+  # Tweakeroo: обычный строительный мод, но в нём есть режим "Free Camera" (tweakFreeCamera),
+  # поэтому он в списке срабатываний. Ключ - строка из его lang-файла (проверено по исходникам).
+  tweakeroo:
+    name: "Tweakeroo (есть режим Free Camera)"
+    keys:
+      - "lang:tweakeroo.config.feature_toggle.name.tweakFreeCamera"
+
+  # ---- читерские клиенты / моды (category: cheat) ----
+  # HeatSeeker 10.6.0 (id playeralert, Fabric 1.21.11). Ключи взяты из самого jar:
+  #   - keybind key.playeralert.blockseeker.toggle зарегистрирован в коде (BlockSeekerClient)
+  #   - строки key.category.playeralert.heatseeker и key.playeralert.toggle_current_area есть в его lang-файле
+  # Внутри: block seeker (подсветка блоков), авто-кликер, phantom/enemy POV, авто-тотем, аукцион-боты
+  # и "panic self-destruct" (по горячей клавише роняет игру и удаляет jar-файлы модов).
+  heatseeker:
+    name: "HeatSeeker"
+    category: "cheat"
+    keys:
+      - "key.playeralert.blockseeker.toggle"
+      - "lang:key.category.playeralert.heatseeker"
+      - "lang:key.playeralert.toggle_current_area"
+      # имена клавиш из класса HotbarPresetKeyConflicts (самим jar используются как имена привязок):
+      - "HeatSeeker: Panic"
+      - "HeatSeeker: PvP Mode"
+
+  # Meteor Client: ключи ПРОВЕРЕНЫ по исходникам (MeteorDevelopment/meteor-client):
+  #   KeyBinds.java  - key.meteor-client.open-gui (Right Shift), key.meteor-client.open-commands (".")
+  #   lang/en_us.json - key.category.meteor-client.meteor-client (в новых версиях)
+  # Названия модулей (KillAura и т.д.) в lang не лежат, поэтому по ним клиент не найти.
+  meteor-client:
+    name: "Meteor Client"
+    category: "cheat"
+    keys:
+      - "key.meteor-client.open-gui"
+      - "key.meteor-client.open-commands"
+      - "lang:key.category.meteor-client.meteor-client"
+
+  # Combatant Client (pivosos2007/combatant-client, id combatant): ключи из его assets/combatant/lang/en_us.json
+  # (4100+ строк, в том числе настройки модулей: scaffold, autototem, reach, esp и т.д.).
+  combatant:
+    name: "Combatant Client"
+    category: "cheat"
+    keys:
+      - "lang:gui.combatant.map.category.display"
+      - "lang:screen.combatant.alt_manager.title"
+      - "lang:setting.autototem.threshold_hp"
+      - "lang:setting.elytrafly.no_crash_damage"
+
+  # ---- клиенты, которые ЭТИМ способом определить нельзя (проверено по исходникам) ----
+  #  Wurst        - свои переводы (assets/wurst/translations) и своя система клавиш, в lang клиента их нет
+  #  LiquidBounce - свои ресурсы (resources/liquidbounce/lang), не lang Minecraft
+  #  MasterMind, NewJessica - нет ни lang-файла, ни клавиш
+  #  Aoba         - нет lang-файла
+  #  DarkClient, RiptermsGhost и другие инжекторы - вообще не моды, ничего не регистрируют
+  # Для закрытых клиентов (Nursultan, Celestial и т.п.) пришли jar-файлы - поищу ключи.
+
+  # Шаблон для новых модов:
+  # my-mod:
+  #   name: "Название"
+  #   keys: ["key.mymod.toggle"]

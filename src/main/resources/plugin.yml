@@ -1,0 +1,25 @@
+name: ClientWatch
+version: 2.2.11
+main: dev.antifreecam.AntiFreecam
+api-version: '26.2'
+folia-supported: true
+depend: [packetevents]
+description: ClientWatch — проверка клиентов и модификаций
+commands:
+  afc:
+    description: ClientWatch — проверка клиентов и модов
+    usage: /afc
+    aliases: [cwatch, antifreecam, clientwatch]
+permissions:
+  antifreecam.bypass:
+    description: Игрок не проверяется на Freecam
+    default: false
+  clientwatch.menu:
+    description: Право открывать меню ClientWatch без отдельной записи в access.yml
+    default: false
+  clientwatch.notify:
+    description: Право получать уведомления ClientWatch
+    default: false
+  clientwatch.pumpkin:
+    description: Отдельное право на команды и меню тыквы «Удали читы»
+    default: false

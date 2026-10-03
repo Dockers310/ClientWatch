@@ -1,0 +1,292 @@
+# База известных модов (встроена в jar, обновляется вместе с плагином).
+# Это НЕ читы и НЕ срабатывания: такие моды попадают только в профиль игрока (меню модов, история заходов),
+# по ним можно поставить отметку вниманием (⭐). Проверяются при входе и при ручной проверке.
+# Отключить: detection.scan-known-mods: false в config.yml.
+# Каждый ключ - строка перевода из lang-файла мода (проверено по исходникам репозиториев на GitHub).
+mods:
+  sodium:
+    name: "Sodium"
+    keys:
+      - "lang:sodium.options.pages.general"
+      - "lang:sodium.options.pages.quality"
+
+  sodium-extra:
+    name: "Sodium Extra"
+    keys:
+      - "lang:modmenu.descriptionTranslation.sodium-extra"
+
+  reeses-sodium-options:
+    name: "Reese's Sodium Options"
+    keys:
+      - "lang:modmenu.descriptionTranslation.reeses-sodium-options"
+
+  iris:
+    name: "Iris Shaders"
+    keys:
+      - "lang:key.category.iris.keybinds"
+      - "lang:iris.shaders.reloaded"
+
+  entityculling:
+    name: "Entity Culling"
+    keys:
+      - "lang:key.entityculling.toggle"
+
+  dynamic-fps:
+    name: "Dynamic FPS"
+    keys:
+      - "lang:key.dynamic_fps.toggle_forced"
+
+  modernfix:
+    name: "ModernFix"
+    keys:
+      - "lang:key.modernfix.config"
+
+  voxy:
+    name: "Voxy"
+    keys:
+      - "lang:voxy.config.title"
+
+  modmenu:
+    name: "Mod Menu"
+    keys:
+      - "lang:modmenu.descriptionTranslation.modmenu"
+
+  emi:
+    name: "EMI"
+    keys:
+      - "lang:key.emi.view_uses"
+
+  jei:
+    name: "JEI (Just Enough Items)"
+    keys:
+      - "lang:key.category.jei.search"
+
+  rei:
+    name: "Roughly Enough Items (REI)"
+    keys:
+      - "lang:config.roughlyenoughitems.title"
+
+  jade:
+    name: "Jade"
+    keys:
+      - "lang:key.category.jade.main"
+
+  wthit:
+    name: "WTHIT"
+    keys:
+      - "lang:key.category.waila.key"
+
+  mousewheelie:
+    name: "Mouse Wheelie"
+    keys:
+      - "lang:key.category.mousewheelie.main"
+
+  yacl:
+    name: "YetAnotherConfigLib (YACL)"
+    keys:
+      - "lang:yacl.restart.title"
+
+  cloth-config:
+    name: "Cloth Config"
+    keys:
+      - "lang:title.cloth-config.config"
+
+  zoomify:
+    name: "Zoomify"
+    keys:
+      - "lang:key.category.zoomify.category"
+
+  ok-zoomer:
+    name: "Ok Zoomer"
+    keys:
+      - "lang:key.category.ok_zoomer.zoom"
+
+  voicechat:
+    name: "Simple Voice Chat"
+    keys:
+      - "lang:key.category.voicechat.voicechat"
+
+  sound-physics:
+    name: "Sound Physics Remastered"
+    keys:
+      - "lang:cloth_config.sound_physics_remastered.enabled"
+
+  plasmo-voice:
+    name: "Plasmo Voice"
+    keys:
+      - "lang:key.category.plasmovoice.name"
+
+  skinlayers3d:
+    name: "3D Skin Layers"
+    keys:
+      - "lang:modmenu.descriptionTranslation.skinlayers3d"
+
+  bettercombat:
+    name: "Better Combat"
+    keys:
+      - "lang:key.category.bettercombat.main"
+
+  shouldersurfing:
+    name: "Shoulder Surfing Reloaded"
+    keys:
+      - "lang:key.category.shouldersurfing.general"
+
+  bobby:
+    name: "Bobby"
+    keys:
+      - "lang:title.bobby.config"
+
+  chat-heads:
+    name: "Chat Heads"
+    keys:
+      - "lang:modmenu.descriptionTranslation.chat_heads"
+
+  nochatreports:
+    name: "No Chat Reports"
+    keys:
+      - "lang:modmenu.descriptionTranslation.nochatreports"
+
+  viafabricplus:
+    name: "ViaFabricPlus"
+    keys:
+      - "lang:modmenu.descriptionTranslation.viafabricplus"
+
+  viafabric:
+    name: "ViaFabric"
+    keys:
+      - "lang:gui.viafabric_config.title"
+
+  litematica:
+    name: "Litematica"
+    keys:
+      - "lang:litematica.gui.title.configs"
+
+  minihud:
+    name: "MiniHUD"
+    keys:
+      - "lang:minihud.gui.title.configs"
+
+  malilib:
+    name: "MaLiLib"
+    keys:
+      - "lang:malilib.gui.title.all_hotkeys"
+
+  itemscroller:
+    name: "Item Scroller"
+    keys:
+      - "lang:itemscroller.gui.button.config_gui.toggles"
+
+  lambdynlights:
+    name: "LambDynamicLights"
+    keys:
+      - "lang:lambdynlights.menu.title"
+
+  enhancedblockentities:
+    name: "Enhanced Block Entities"
+    keys:
+      - "lang:value.ebe.few"
+
+  citresewn:
+    name: "CIT Resewn"
+    keys:
+      - "lang:config.citresewn-defaults.title"
+
+  notenoughanimations:
+    name: "Not Enough Animations"
+    keys:
+      - "lang:text.nea.title"
+
+  entity-model-features:
+    name: "Entity Model Features"
+    keys:
+      - "lang:entity_model_features.title"
+
+  entity-texture-features:
+    name: "Entity Texture Features"
+    keys:
+      - "lang:config.entity_texture_features.title"
+
+  debugify:
+    name: "Debugify"
+    keys:
+      - "lang:debugify.name"
+
+  shulkerboxtooltip:
+    name: "Shulker Box Tooltip"
+    keys:
+      - "lang:shulkerboxtooltip.hint.full"
+
+  configured:
+    name: "Configured"
+    keys:
+      - "lang:key.configured.open_mod_list"
+
+  lambdabettergrass:
+    name: "Lambda Better Grass"
+    keys:
+      - "lang:lambdabettergrass.menu.title"
+
+  notenoughcrashes:
+    name: "Not Enough Crashes"
+    keys:
+      - "lang:notenoughcrashes.gui.getLink"
+
+  # ---- добавлено по запросу: моды, присланные вручную (проверено по jar/lang-файлам) ----
+
+  accurateblockplacement:
+    name: "Accurate Block Placement (Reborn)"
+    keys:
+      - "lang:text.autoconfig.accurateblockplacement.title"
+      - "lang:key.category.accurateblockplacement.category"
+
+  gammautils:
+    name: "Gamma Utils"
+    keys:
+      - "lang:text.autoconfig.gammautils.title"
+      - "lang:key.category.gammautils.gamma"
+
+  inventoryprofilesnext:
+    name: "Inventory Profiles Next"
+    keys:
+      - "lang:inventoryprofiles.gui.config.title"
+      - "lang:inventoryprofiles.common.gui.config.advanced_keybind_settings"
+
+  shieldstatus:
+    name: "Shield Status"
+    keys:
+      - "lang:key.category.walksy.key"
+
+  # ShieldFixes (walksy.shieldfixes): в jar НЕТ ни одного lang-файла и ни одной клавиши
+  # (только миксины на рендер/логику щита) - строкой перевода или keybind-ом этот способ
+  # его не находит. Единственная зацепка - общая библиотека WalksyLib, но она не регистрирует
+  # ничего специфичного для ShieldFixes, отличить от ShieldStatus/других её модов так нельзя.
+  # Если понадобится точное определение - надо смотреть, регистрирует ли WalksyLib сетевой
+  # канал (тогда его поймает профиль по каналам, см. profile.known-channels), иначе никак.
+
+  # Combat Hitboxes (me.sootysplash.box, id combat-hitboxes): аналогично, в jar нет lang-файла
+  # (только icon.png) и нет клавиши - настройки только через Cloth Config без переводов.
+  # Этим способом не определяется.
+
+  autoclicker-mikey:
+    name: "Auto Clicker (pro.mikey / ErrorMikey)"
+    keys:
+      - "lang:key.category.autoclicker.keybinding-title"
+
+  simple-autoclicker:
+    name: "Simple AutoClicker (sansrus)"
+    keys:
+      - "lang:key.category.simple_autoclicker.category"
+      - "lang:gui.simpleautoclicker.title"
+
+  autoswap:
+    name: "AutoSwap (Nikrecs)"
+    keys:
+      - "lang:autoswap.config.title"
+      - "lang:autoswap.key.category"
+
+  xplus-autofish:
+    name: "XPlus Autofish"
+    keys:
+      - "lang:options.autofish.title"
+      - "lang:key.autofish.open_gui"
+
