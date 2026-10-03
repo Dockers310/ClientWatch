@@ -2,7 +2,6 @@
 
 Плагин для Paper 26.2 / Folia (Java 25): контроль клиентских модов игроков с помощью watchlist (Modrinth + CurseForge) и пассивного Fabric-мода **ClientWatch Companion**.
 
-Полная история изменений — в [CHANGELOG.md](CHANGELOG.md).
 
 ## Возможности
 
